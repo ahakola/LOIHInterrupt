@@ -38,8 +38,8 @@ koKR (Korean) | yuk6196
 
 **Todo:**
 
-[x] Waiting for bug reports to flow in
-[x] Waiting for translations to flow in
+- [x] Waiting for bug reports to flow in
+- [x] Waiting for translations to flow in
 
 ---
 
