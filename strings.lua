@@ -160,15 +160,18 @@ elseif LOCALE == "ptBR" then
 --@localization(locale="ptBR", format="lua_additive_table")@
 
 elseif LOCALE == "ruRU" then
+-- Translated by Dysphorio (22)
 --@localization(locale="ruRU", format="lua_additive_table")@
 
 elseif LOCALE == "koKR" then
+-- Translated by yuk6196 (104)
 --@localization(locale="koKR", format="lua_additive_table")@
 
 elseif LOCALE == "zhCN" then
 --@localization(locale="zhCN", format="lua_additive_table")@
 
 elseif LOCALE == "zhTW" then
+-- Translated by sopgri (7)
 --@localization(locale="zhTW", format="lua_additive_table")@
 
 end
