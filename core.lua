@@ -194,7 +194,7 @@ local classIcons ={ -- SpellTextures
 	["PRIEST258"] = 458230, -- Shadow
 	["ROGUE"] = 132219,
 	["SHAMAN"] = 136018,
-	["WARLOCK"] = 136174,
+	["WARLOCK"] = 132409,
 	["WARRIOR"] = 132938,
 }
 
@@ -786,7 +786,9 @@ function f:PLAYER_REGEN_ENABLED(event)
 	end
 end
 
-function f:UNIT_CONNECTION(event, unitID, hasConnected)
+--function f:UNIT_CONNECTION(event, unitID, hasConnected)
+function f:UNIT_CONNECTION(event, unitID)
+	local hasConnected = UnitIsConnected(unitID)
 	--if not UnitIsConnected(unitID) then -- Disconnected
 	--	bar.fg:SetColorTexture(grayBar[1], grayBar[2], grayBar[3], grayBar[4])
 	--end
