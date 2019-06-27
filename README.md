@@ -46,5 +46,3 @@ koKR (Korean) | yuk6196
 Sending your bug reports/feature suggestions using CurseForge ticket-tool at https://wow.curseforge.com/projects/loihinterrupt/issues/ (use your Curse account to login) or PM me at Curse or CurseForge gets them noticed faster by me than using comments section.
 
 ---
-
-**Please disable TradeSkillMaster before copy&amp;pasting Lua errors to me, it makes the Lua error -reports almost impossible to read.**
