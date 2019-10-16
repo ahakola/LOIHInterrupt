@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/ahakola/LOIHInterrupt.svg?branch=master)](https://travis-ci.com/ahakola/LOIHInterrupt)
+
 # LOIHInterrupt
 
 Interrupt manager for guild &lt;Lords of Ironhearts&gt; of Arathor EU.
@@ -29,6 +31,8 @@ Thanks to Bloodline for suggesting interrupt announcements feature.
 Language | Translator(s)
 -------- | -------------
 koKR (Korean) | yuk6196
+ruRU (Russian) | Dysphorio
+zhTW (Traditional Chinese) | sopgri
 
 ---
 

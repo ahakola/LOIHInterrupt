@@ -27,3 +27,4 @@ externals:
 ignore:
     - LICENSE.md
     - README.md
+    - .travis.yml

@@ -398,10 +398,14 @@ do
 			else
 				if f.playerGUID == a.guid or f.playerGUID == b.guid then -- Player on top
 					return f.playerGUID == a.guid
-				elseif f.rosterInfo[a.guid].delay == f.rosterInfo[b.guid].delay then -- Alphabetical sort
-					return f.rosterInfo[a.guid].name < f.rosterInfo[b.guid].name
+				elseif f.rosterInfo[a.guid] or f.rosterInfo[b.guid] then
+					if f.rosterInfo[a.guid].delay == f.rosterInfo[b.guid].delay then -- Alphabetical sort
+						return f.rosterInfo[a.guid].name < f.rosterInfo[b.guid].name
+					else
+						return f.rosterInfo[a.guid].delay < f.rosterInfo[b.guid].delay -- Timer sort
+					end
 				else
-					return f.rosterInfo[a.guid].delay < f.rosterInfo[b.guid].delay -- Timer sort
+					return true
 				end
 			end
 		end
@@ -1126,9 +1130,20 @@ function f:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 	self.groupType > 0 and self.playerGUID == sourceGUID and spellTable[spellId] then
 		Debug("CLEU:", interruptMsg, extraSpellId, extraSpellName, destName)
 
-		SendChatMessage(string.format(interruptMsg, extraSpellId, extraSpellName, destName), "SAY")
-	elseif eventType == "SPELL_INTERRUPT" and self.rosterInfo[sourceGUID] and not spellTable[spellId] then
-		assert(nopeSpells[spellId], string.format(L.Assert, spellName, spellId, sourceName, self.rosterInfo[sourceGUID].class, sourceGUID))
+		-- SendChatMessage() is partially hw event protected:
+		-- 		"CHANNEL" is protected, "SAY", "YELL" are protected while outside of instances/raids.
+		-- 		https://twitter.com/deadlybossmods/status/1176685822223011842
+		if IsInInstance() then
+			SendChatMessage(string.format(interruptMsg, extraSpellId, extraSpellName, destName), "SAY")
+		else
+			if self.groupType > 1 then -- Raid (or really random outdoor BG situation going on???)
+				SendChatMessage(string.format(interruptMsg, extraSpellId, extraSpellName, destName), "RAID")
+			else -- Party
+				SendChatMessage(string.format(interruptMsg, extraSpellId, extraSpellName, destName), "PARTY")
+			end
+		end
+	elseif eventType == "SPELL_INTERRUPT" and self.rosterInfo[sourceGUID] and spellId and not spellTable[spellId] then
+		assert(nopeSpells[spellId], string.format(L.Assert, tostring(spellName), tonumber(spellId), tostring(sourceName), tostring(self.rosterInfo[sourceGUID].class), tostring(sourceGUID)))
 	end
 
 	if eventType == "UNIT_DIED" and self.rosterInfo[destGUID] then
