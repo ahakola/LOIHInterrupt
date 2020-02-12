@@ -142,6 +142,7 @@ local nopeSpells = { -- These interrupt, but aren't the actual interrupt spells 
 	[93985] = true, -- DRUID - Skull Bash
 	[97547] = true, -- DRUID - Solar Beam
 	[220543] = true, -- PRIEST - Silence
+	[240448] = true, -- Mythic+ Dungeon Affix 'Quaking' - Quake
 }
 local nopeClasses = { -- Classes with specs without interrupt or different interrupt spells for different specs
 	["DRUID"] = true,
