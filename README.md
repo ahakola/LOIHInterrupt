@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/ahakola/LOIHInterrupt.svg?branch=master)](https://travis-ci.com/ahakola/LOIHInterrupt)
+![Release](https://github.com/ahakola/LOIHInterrupt/actions/workflows/release.yml/badge.svg)
 
 # LOIHInterrupt
 
