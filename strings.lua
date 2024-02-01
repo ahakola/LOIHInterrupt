@@ -142,6 +142,7 @@ L.CombatLockdown = "You are in combat. Only %s and %s are accepted commands duri
 	------------------------------------------------------------------------	
 
 if LOCALE == "deDE" then
+-- Translation by Isadruk-Kel´thuzad (EU) (Gnomenpresse) (104)
 --@localization(locale="deDE", format="lua_additive_table")@
 
 elseif LOCALE == "esES" then
