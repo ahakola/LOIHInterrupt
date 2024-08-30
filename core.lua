@@ -19,6 +19,21 @@ local ADDON_NAME, ns = ...
 local L = ns.L
 
 -- Libs and Upvalues -----------------------------------------------------------
+-- GLOBALS: DEBUG_CHAT_FRAME, DEFAULT_CHAT_FRAME, LibStub, LOIHInterruptDB
+-- GLOBALS: SLASH_LOIHINTERRUPT1, SLASH_LOIHINTERRUPT2
+
+-- GLOBALS: _G, Ambiguate, assert, C_ChatInfo, C_Spell, C_Timer, ChatFrame1
+-- GLOBALS: CombatLogGetCurrentEventInfo, CreateFrame, FONT_COLOR_CODE_CLOSE
+-- GLOBALS: GetScreenHeight, GetScreenWidth, GRAY_FONT_COLOR, hooksecurefunc
+-- GLOBALS: InCombatLockdown, IsInGroup, IsInInstance, IsInRaid, IsShiftKeyDown
+-- GLOBALS: LE_REALM_RELATION_COALESCED, LE_REALM_RELATION_VIRTUAL, math
+-- GLOBALS: NORMAL_FONT_COLOR, NORMAL_FONT_COLOR_CODE, pairs, RAID_CLASS_COLORS
+-- GLOBALS: select, SendChatMessage, SlashCmdList, StaticPopup_Show
+-- GLOBALS: StaticPopupDialogs, string, strjoin, strsplit, table, tonumber
+-- GLOBALS: tostring, tostringall, tremove, type, UIParent, UnitAffectingCombat
+-- GLOBALS: UnitClass, UnitGUID, UnitIsConnected, UnitIsDeadOrGhost
+-- GLOBALS: UnitIsGroupLeader, UnitName, UnitRealmRelationship, unpack
+
 local ACD = LibStub("AceConfigDialog-3.0")
 local ACR = LibStub("AceConfigRegistry-3.0")
 local ADB = LibStub("AceDB-3.0")
@@ -26,65 +41,24 @@ local ADO = LibStub("AceDBOptions-3.0")
 local LGIST = LibStub:GetLibrary("LibGroupInSpecT-1.1")
 
 local _G = _G
-local Ambiguate = Ambiguate
 local assert = assert
-local C_ChatInfo = C_ChatInfo
+local C_Spell = C_Spell
 local C_Timer = C_Timer
-local ChatFrame1 = ChatFrame1
 local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 local CreateFrame = CreateFrame
-local DEAD = DEAD
-local DEBUG_CHAT_FRAME = DEBUG_CHAT_FRAME
-local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
-local FONT_COLOR_CODE_CLOSE = FONT_COLOR_CODE_CLOSE
-local FOREIGN_SERVER_LABEL = FOREIGN_SERVER_LABEL
-local GetScreenHeight = GetScreenHeight
-local GetScreenWidth = GetScreenWidth
-local GetSpecialization = GetSpecialization
-local GetSpellTexture = GetSpellTexture
-local GRAY_FONT_COLOR_CODE = GRAY_FONT_COLOR_CODE
-local HIDE = HIDE
-local hooksecurefunc = hooksecurefunc
-local InCombatLockdown = InCombatLockdown
-local INTERACTIVE_SERVER_LABEL = INTERACTIVE_SERVER_LABEL
-local INTERRUPTED = INTERRUPTED
-local ipairs = ipairs
-local IsInGroup = IsInGroup
+local DEAD = _G.DEAD
 local IsInInstance = IsInInstance
-local IsInRaid = IsInRaid
-local IsShiftKeyDown = IsShiftKeyDown
-local LE_REALM_RELATION_COALESCED = LE_REALM_RELATION_COALESCED
-local LE_REALM_RELATION_VIRTUAL = LE_REALM_RELATION_VIRTUAL
-local math = math
-local NORMAL_FONT_COLOR_CODE = NORMAL_FONT_COLOR_CODE
 local pairs = pairs
-local PLAYER_OFFLINE = PLAYER_OFFLINE
-local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local READY = READY
-local select = select
+local PLAYER_OFFLINE = _G.PLAYER_OFFLINE
+local READY = _G.READY
 local SendChatMessage = SendChatMessage
-local SHOW = SHOW
-local StaticPopup_Show = StaticPopup_Show
-local StaticPopupDialogs = StaticPopupDialogs
 local string = string
-local strjoin = strjoin
-local strsplit = strsplit
 local table = table
 local tonumber = tonumber
 local tostring = tostring
-local tostringall = tostringall
-local tremove = tremove
 local type = type
-local UIParent = UIParent
-local UnitAffectingCombat = UnitAffectingCombat
-local UnitClass = UnitClass
-local UnitGUID = UnitGUID
 local UnitIsConnected = UnitIsConnected
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
-local UnitIsGroupLeader = UnitIsGroupLeader
-local UnitName = UnitName
-local UnitRealmRelationship = UnitRealmRelationship
-local unpack = unpack
 
 -- DB Defaults -----------------------------------------------------------------
 -- DB Global name: LOIHInterruptDB
@@ -187,7 +161,7 @@ local classIcons ={ -- SpellTextures
 	["WARRIOR"] = 132938,
 }
 
-local interruptMsg = INTERRUPTED.." |cff71d5ff|Hspell:%d:|h[%s]|h|r (%s)"
+local interruptMsg = _G.INTERRUPTED.." |cff71d5ff|Hspell:%d:|h[%s]|h|r (%s)"
 local defaultIcon = 134400 -- Interface\Icons\INV_Misc_QuestionMark
 local greenBar = { 0, .75, 0, .75 }
 local redBar = { .75, 0, 0, .75 }
@@ -247,9 +221,9 @@ do
 			local baseName = name:match(patern) and select(1, name:match(patern)) or name
 
 			if relation == LE_REALM_RELATION_VIRTUAL then -- Connected realm
-				return baseName..INTERACTIVE_SERVER_LABEL -- Shorten realm name into (#)
+				return baseName.._G.INTERACTIVE_SERVER_LABEL -- Shorten realm name into (#)
 			elseif relation == LE_REALM_RELATION_COALESCED then -- Foreign realm
-				return baseName..FOREIGN_SERVER_LABEL -- Shorten realm name into (*)
+				return baseName.._G.FOREIGN_SERVER_LABEL -- Shorten realm name into (*)
 			else -- Same realm as Player
 				return baseName
 			end
@@ -1215,8 +1189,8 @@ end
 
 StaticPopupDialogs[ADDON_NAME.."_RECIEVE_LIST_CONFIRM"] = {
 	text = "%s",
-	button1 = YES,
-	button2 = NO,
+	button1 = _G.YES,
+	button2 = _G.NO,
 	sound = "igCharacterInfoOpen",
 	OnAccept = function(self, data)
 		Debug("StaticPopupDialogs: Accepting new list")
@@ -1334,8 +1308,8 @@ function f:GetOptions()
 						desc = L.SoloModeDesc,
 						order = 4,
 						values = {
-							[0] = HIDE,
-							[1] = SHOW,
+							[0] = _G.HIDE,
+							[1] = _G.SHOW,
 						},
 					},
 					party = {
@@ -1344,7 +1318,7 @@ function f:GetOptions()
 						desc = L.PartyModeDesc,
 						order = 5,
 						values = {
-							[0] = HIDE,
+							[0] = _G.HIDE,
 							[2] = L.FixedList,
 							[3] = L.AutofillList,
 							[4] = L.CooldownTracking,
@@ -1356,7 +1330,7 @@ function f:GetOptions()
 						desc = L.RaidModeDesc,
 						order = 6,
 						values = {
-							[0] = HIDE,
+							[0] = _G.HIDE,
 							[2] = L.FixedList,
 							[4] = L.CooldownTracking,
 						},
@@ -1367,7 +1341,7 @@ function f:GetOptions()
 						desc = L.PvPModeDesc,
 						order = 7,
 						values = {
-							[0] = HIDE,
+							[0] = _G.HIDE,
 							[2] = L.FixedList,
 							[4] = L.CooldownTracking,
 						},
@@ -1786,7 +1760,7 @@ local SlashHandlers = {
 		Print("Debugging:", tostring(f.db.profile.debug))
 	end,
 	[L.hide] = function()
-		Print(HIDE)
+		Print(_G.HIDE)
 		if f:IsShown() then
 			f:Hide()
 		end
@@ -1801,7 +1775,7 @@ local SlashHandlers = {
 		end
 	end,
 	[L.show] = function()
-		Print(SHOW)
+		Print(_G.SHOW)
 		if not f:IsShown() then
 			f:Show()
 		end
