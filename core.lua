@@ -1095,7 +1095,7 @@ function f:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 			self.rosterInfo[sourceGUID].delay = spellTable[spellId]
 			self.rosterInfo[sourceGUID].CD = spellTable[spellId]
 
-			local spellIcon = GetSpellTexture(spellId)
+			local spellIcon = C_Spell.GetSpellTexture(spellId)
 			if self.bars[sourceGUID].icon:GetTexture() ~= spellIcon then -- Update Icon if it was wrong
 				self.bars[sourceGUID].icon:SetTexture(spellIcon)
 			end
@@ -1108,7 +1108,7 @@ function f:COMBAT_LOG_EVENT_UNFILTERED(event, ...)
 		(self.groupType == 2 and self.db.profile.raid == 4) or
 		(self.groupType == 3 and self.db.profile.pvp == 4)) then -- Create new bar on the fly for Cooldown tracking
 			--Debug("CLEU: New bar for", sourceName, self.rosterInfo[sourceGUID].order)
-			self.bars[sourceGUID] = AcquireFrame(self.anchor, sourceName, GetSpellTexture(spellId), sourceGUID)
+			self.bars[sourceGUID] = AcquireFrame(self.anchor, sourceName, (C_Spell.GetSpellTexture(spellId)), sourceGUID)
 
 			self.rosterInfo[sourceGUID].delay = spellTable[spellId]
 			self.rosterInfo[sourceGUID].CD = spellTable[spellId]
