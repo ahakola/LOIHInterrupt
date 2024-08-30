@@ -452,7 +452,8 @@ do
 
 		local repositioned = {}
 		local i = 1
-		for _, bar in ipairs(tbl) do
+		for j = 1, #tbl do
+			local bar = tbl[j]
 			if bar.guid ~= nil and not repositioned[bar.guid] then -- nil tables and other weird stuff blocked
 				local yo = getOffset(i)
 				bar:ClearAllPoints()
