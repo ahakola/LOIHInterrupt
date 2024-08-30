@@ -1192,9 +1192,9 @@ function f:CHAT_MSG_ADDON(event, prefix, message, channel, sender)
 			if name and name ~= "" then
 				local _, class = UnitClass(name)
 				if class then
-					nameTbl[k] = "|c"..RAID_CLASS_COLORS[class].colorStr..name..FONT_COLOR_CODE_CLOSE
+					nameTbl[k] = RAID_CLASS_COLORS[class]:WrapTextInColorCode(name)
 				else
-					nameTbl[k] = GRAY_FONT_COLOR_CODE..name..FONT_COLOR_CODE_CLOSE
+					nameTbl[k] = GRAY_FONT_COLOR:WrapTextInColorCode(name)
 				end
 			end
 		end
@@ -1203,7 +1203,7 @@ function f:CHAT_MSG_ADDON(event, prefix, message, channel, sender)
 		Debug("CHAT_MSG_ADDON: newList:", newList)
 		newList = string.gsub(newList, " /  / ", " / ")
 
-		local line = string.format(L.PopUpLine, NORMAL_FONT_COLOR_CODE..ADDON_NAME..":"..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..shortSender..FONT_COLOR_CODE_CLOSE, newList, NORMAL_FONT_COLOR_CODE, FONT_COLOR_CODE_CLOSE)
+		local line = string.format(L.PopUpLine, NORMAL_FONT_COLOR:WrapTextInColorCode(ADDON_NAME .. ":"), NORMAL_FONT_COLOR:WrapTextInColorCode(shortSender), newList, NORMAL_FONT_COLOR_CODE, FONT_COLOR_CODE_CLOSE)
 		
 
 		local dialogFrame = StaticPopup_Show(ADDON_NAME.."_RECIEVE_LIST_CONFIRM", line)
@@ -1241,7 +1241,7 @@ StaticPopupDialogs[ADDON_NAME.."_RECIEVE_LIST_CONFIRM"] = {
 
 		DelayedUpdate()
 
-		Print(L.FixedNames, (f.groupType == 3 and _G.PVP or (f.groupType == 2 and _G.RAID or _G.PARTY)), NORMAL_FONT_COLOR_CODE..L.FixedList..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash..FONT_COLOR_CODE_CLOSE)
+		Print(L.FixedNames, (f.groupType == 3 and _G.PVP or (f.groupType == 2 and _G.RAID or _G.PARTY)), NORMAL_FONT_COLOR:WrapTextInColorCode(L.FixedList), NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash))
 
 		Debug("StaticPopupDialogs: List status:", tostring(frame))
 		if frame then -- Reopen frame with refreshed info
@@ -1312,7 +1312,7 @@ function f:GetOptions()
 				args = {
 					fixedMode = {
 						type = "description",
-						name = string.format(L.FixedModeDesc, NORMAL_FONT_COLOR_CODE, FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash..FONT_COLOR_CODE_CLOSE),
+						name = string.format(L.FixedModeDesc, NORMAL_FONT_COLOR_CODE, FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash)),
 						order = 1,
 						fontSize = "medium",
 					},
@@ -1592,31 +1592,31 @@ function f:GetOptions()
 			},
 			infoDesc1 = {
 				type = "description",
-				name = string.format(L.infoDesc1, NORMAL_FONT_COLOR_CODE..L.slash..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.config..FONT_COLOR_CODE_CLOSE),
+				name = string.format(L.infoDesc1, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash), NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.config)),
 				order = 1,
 				fontSize = "large",
 			},
 			infoDesc2 = {
 				type = "description",
-				name = string.format(L.infoDesc2, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.show..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.hide..FONT_COLOR_CODE_CLOSE),
+				name = string.format(L.infoDesc2, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.show), NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.hide)),
 				order = 2,
 				fontSize = "large",
 			},
 			infoDesc3 = {
 				type = "description",
-				name = string.format(L.infoDesc3, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.list..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.add.." (#)"..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.remove.." #"..FONT_COLOR_CODE_CLOSE),
+				name = string.format(L.infoDesc3, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.list), NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.add.." (#)"), NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.remove.." #")),
 				order = 3,
 				fontSize = "large",
 			},
 			infoDesc4 = {
 				type = "description",
-				name = string.format(L.infoDesc4, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.reset..FONT_COLOR_CODE_CLOSE),
+				name = string.format(L.infoDesc4, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.reset)),
 				order = 4,
 				fontSize = "large",
 			},
 			infoDesc5 = {
 				type = "description",
-				name = string.format(L.infoDesc5, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.help..FONT_COLOR_CODE_CLOSE),
+				name = string.format(L.infoDesc5, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.help)),
 				order = 5,
 				fontSize = "large",
 			},
@@ -1945,7 +1945,7 @@ local SlashHandlers = {
 		local param = ...
 		if not param or param == "" then
 			Print(L.HelpListParams, NORMAL_FONT_COLOR_CODE..L.slash, L.config, L.show, L.hide, L.list, L.add, L.remove, L.reset, L.help, L.command, FONT_COLOR_CODE_CLOSE)
-			Print(L.HelpNoParam, NORMAL_FONT_COLOR_CODE..L.slash..FONT_COLOR_CODE_CLOSE)
+			Print(L.HelpNoParam, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash))
 		elseif helpTbl[param] then
 			Print(L.HelpOn, tostring(param))
 			Print(helpTbl[param].."\n", NORMAL_FONT_COLOR_CODE..L.slash.." "..L[param], FONT_COLOR_CODE_CLOSE)
@@ -1959,7 +1959,7 @@ SlashCmdList["LOIHINTERRUPT"] = function(text)
 	local command, params = strsplit(" ", text, 2)
 
 	if InCombatLockdown() and (command ~= L.show and command ~= L.hide) then
-		Print(L.CombatLockdown, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.show..FONT_COLOR_CODE_CLOSE, NORMAL_FONT_COLOR_CODE..L.slash.." "..L.hide..FONT_COLOR_CODE_CLOSE)
+		Print(L.CombatLockdown, NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.show), NORMAL_FONT_COLOR:WrapTextInColorCode(L.slash.." "..L.hide))
 
 		return
 	end
