@@ -121,6 +121,7 @@ local nopeSpells = { -- These interrupt, but aren't the actual interrupt spells 
 	[328406] = true, -- SL dungeon 'Necrotic Wake' special one time use item 'Discharged Anima' - Discharged Anima
 	[386071] = true, -- DF - WARRIOR - Disrupting Shout
 	[398388] = true, -- DF - HUNTER - Wailing Arrow
+	[420530] = true, -- TWW - Season 1 Delve Companion, Brann Bronzebeard - Trusty Whip
 }
 local nopeClasses = { -- Classes with specs without interrupt or different interrupt spells for different specs
 	["DRUID"] = true,
