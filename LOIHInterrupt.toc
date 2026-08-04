@@ -1,4 +1,4 @@
-## Interface: 110207
+## Interface: 120007
 ## Author: Sanex (Arathor EU)
 ## Title: LOIHInterrupt
 ## Version: @project-version@
